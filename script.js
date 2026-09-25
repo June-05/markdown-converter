@@ -98,23 +98,30 @@ previewTab.addEventListener("click", () => {
     previewTab.classList.add("active");
 });
 
-//maximizing tabs
+//maximizing&minimizing tabs
 const inputMax = document.getElementById("inputMax");
 const htmlMax = document.getElementById("htmlMax");
 const previewMax = document.getElementById("previewMax");
 
+//svg icons for maximizing and minimizing tabs
+const maximizeIcon =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5858 5H14V3H21V10H19V6.41421L14.7071 10.7071L13.2929 9.29289L17.5858 5ZM3 14H5V17.5858L9.29289 13.2929L10.7071 14.7071L6.41421 19H10V21H3V14Z"></path></svg>';
+const minimizeIcon =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM7 11H17V13H7V11Z"></path></svg>';
+
 //inital state
-inputContainer.classList.add("maximized");
-inputMax.textContent = "Min";
+inputMax.innerHTML = minimizeIcon;
+htmlMax.innerHTML = maximizeIcon;
+previewMax.innerHTML = maximizeIcon;
 
 inputMax.addEventListener("click", (event) => {
     const isBeingMaximized = inputContainer.classList.toggle("maximized");
-    if(isBeingMaximized) {
-      inputTab.classList.add("maximized");
-      inputMax.textContent = "Min";
+    if (isBeingMaximized) {
+        inputTab.classList.add("maximized");
+        inputMax.innerHTML = minimizeIcon;
     } else {
-      inputTab.classList.remove("maximized");
-      inputMax.textContent = "Max";
+        inputTab.classList.remove("maximized");
+        inputMax.innerHTML = maximizeIcon;
     }
 
     event.stopPropagation();
@@ -122,26 +129,25 @@ inputMax.addEventListener("click", (event) => {
 
 htmlMax.addEventListener("click", (event) => {
     const isBeingMaximized = htmlContainer.classList.toggle("maximized");
-    if(isBeingMaximized) {
-      htmlTab.classList.add("maximized");
-      htmlMax.textContent = "Min";
+    if (isBeingMaximized) {
+        htmlTab.classList.add("maximized");
+        htmlMax.innerHTML = minimizeIcon;
     } else {
-      htmlTab.classList.remove("maximized");
-      htmlMax.textContent = "Max";
+        htmlTab.classList.remove("maximized");
+        htmlMax.innerHTML = maximizeIcon;
     }
 
     event.stopPropagation();
-
 });
 
 previewMax.addEventListener("click", (event) => {
     const isBeingMaximized = previewContainer.classList.toggle("maximized");
-    if(isBeingMaximized) {
-      previewTab.classList.add("maximized");
-      previewMax.textContent = "Min";
+    if (isBeingMaximized) {
+        previewTab.classList.add("maximized");
+        previewMax.innerHTML = minimizeIcon;
     } else {
-      previewTab.classList.remove("maximized");
-      previewMax.textContent = "Max";
+        previewTab.classList.remove("maximized");
+        previewMax.innerHTML = maximizeIcon;
     }
 
     event.stopPropagation();

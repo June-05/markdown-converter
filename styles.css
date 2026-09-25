@@ -1,7 +1,5 @@
 :root {
-    --header-height: 10vh;
-    --black: #00171f;
-    --blue: rgba(0, 168, 232, 0.16);
+    --body: rgba(0, 168, 232, 0.16);
     --background: #034e6b;
     --foreground: #041f31;
     --border: #065990;
@@ -18,7 +16,7 @@
 }
 body {
     font-family: var(--font-body);
-    background-color: var(--blue);
+    background-color: var(--body);
     padding: 20px;
 }
 #main-container {
@@ -30,11 +28,12 @@ body {
 }
 
 #tab-container {
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: baseline;
 
-    gap: 30px;
+    gap: 10px;
     padding-top: 10px;
     padding-left: 10px;
 
@@ -43,27 +42,47 @@ body {
     background-color: var(--background);
 }
 
-
 .tab {
     padding: 10px 20px;
     text-align: center;
     cursor: pointer;
-    
+
     border-bottom: none;
-    border-radius: 100px 100px 100px 100px ;
+    border-radius: 100px;
     font-weight: bold;
     color: var(--foreground);
     background-color: var(--background);
     z-index: 100;
 
-    button{
+    transition:
+        background-color 0.2s ease-out,
+        color 0.2s ease-out,
+        visibility 0.2s ease-out;
+
+    button {
         visibility: hidden;
+        background: none;
+        border: none;
+        border-radius: 10%;
+        padding: 0.2em;
+        color: var(--white);
+        svg {
+            width: 1.5em;
+            color: var(--white);
+        }
     }
 }
 
-.tab:hover:not(.active) {
+button:hover {
+    cursor: pointer;
+    background-color: gray;
+    svg {
+        color: var(--off-white);
+    }
+}
 
-    button{
+.tab:hover:not(.active, .maximized) {
+    button {
         visibility: visible;
     }
     padding: 8px 20px;
@@ -71,11 +90,11 @@ body {
     background-color: var(--foreground);
 }
 
-.tab.active, .tab.maximized {
-    button{
+.tab.active,
+.tab.maximized {
+    button {
         visibility: visible;
     }
-
     font-weight: normal;
     color: var(--white);
     background-color: var(--foreground);
@@ -89,11 +108,13 @@ body {
     min-width: 0;
 }
 
-.container.maximized{
+.container.maximized {
     display: block !important;
 }
 
-#markdown-input,#preview,#html-output {
+#markdown-input,
+#preview,
+#html-output {
     field-sizing: content;
     resize: none;
     outline: none;
@@ -109,16 +130,68 @@ body {
     white-space: pre-wrap;
     overflow-wrap: anywhere;
     overflow-y: auto;
-    
+
     width: 100%;
     min-height: 300px;
     border: 2px solid var(--border);
-    border-radius: 0 5px 5px 5px ;
+    border-radius: 0 5px 5px 5px;
 }
 
+@media (max-width: 750px) {
+    #main-container,
+    #tab-container {
+        display: contents;
+    }
 
-@media (max-width: 600px) {
-    #main-container {
+    #tab-container .tab:nth-child(1) {
+        order: 1;
+    }
+    #main-container .container:nth-child(1) {
+        order: 2;
+        margin: 0 0 20px 0;
+    }
+
+    #tab-container .tab:nth-child(2) {
+        order: 3;
+    }
+    #main-container .container:nth-child(2) {
+        order: 4;
+        margin: 0 0 20px 0;
+    }
+
+    #tab-container .tab:nth-child(3) {
+        order: 5;
+    }
+    #main-container .container:nth-child(3) {
+        order: 6;
+        margin: 0 0 20px 0;
+    }
+
+    #wrapper {
+        display: flex;
         flex-direction: column;
+
+        button {
+            display: none;
+        }
+
+        .tab {
+            font-weight: normal;
+            color: var(--white);
+            background-color: var(--foreground);
+            border: 2px solid var(--border);
+            border-radius: 5px 5px 0 0;
+            cursor: default;
+            pointer-events: none;
+        }
+    }
+    #markdown-input,
+    #preview,
+    #html-output {
+        border-radius: 0 0 5px 5px;
+        border-top: none;
+    }
+    .container {
+        display: block !important;
     }
 }

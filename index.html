@@ -9,25 +9,44 @@
 
     <body>
         <h1>Markdown to HTML Converter</h1>
-        <div id="tab-container">
-            <div class="tab" id="inputTab">Markdown Input <button id="inputMax">Max</button></div>
-            <div class="tab" id="htmlTab">Raw HTML Output <button id="htmlMax">Max</button></div>
-            <div class="tab" id="previewTab">HTML Preview <button id="previewMax">Max</button></div>
+        <div id="wrapper">
+            <div id="tab-container">
+                <div class="tab" id="inputTab">
+                    Markdown Input <button id="inputMax"></button>
+                </div>
+                <div class="tab" id="htmlTab">
+                    Raw HTML Output <button id="htmlMax"></button>
+                </div>
+                <div class="tab" id="previewTab">
+                    HTML Preview <button id="previewMax"></button>
+                </div>
+            </div>
+            <div id="main-container">
+                <div class="container maximized" id="inputContainer">
+                    <textarea
+                        id="markdown-input"
+                        placeholder="# Heading 1
+## Heading 2
+### Heading 3
+
+**Bold Text** or __Bold Text__
+*Italic Text* or _Italic Text_
+
+> Blockquote
+
+[Link Text](https://example.com)
+![Image Alt Text](image-url.jpg)"
+                    ></textarea>
+                </div>
+                <div class="container" id="htmlContainer">
+                    <div id="html-output"></div>
+                </div>
+                <div class="container" id="previewContainer">
+                    <div id="preview"></div>
+                </div>
+            </div>
         </div>
-        <div id="main-container">
-            <div class="container maximized" id="inputContainer">
-                <textarea
-                    id="markdown-input"
-                    placeholder="Enter your markdown here..."
-                ></textarea>
-            </div>
-            <div class="container" id="htmlContainer">
-                <div id="html-output"></div>
-            </div>
-            <div class="container" id="previewContainer">
-                <div id="preview"></div>
-            </div>
-        </div>
+
         <script src="./script.js"></script>
     </body>
 </html>
