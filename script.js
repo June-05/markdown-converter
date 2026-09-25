@@ -65,6 +65,7 @@ const previewTab = document.getElementById("previewTab");
 //initial state
 inputContainer.style.display = "block";
 inputTab.classList.add("active");
+inputTab.classList.add("maximized");
 
 //switching between tabs
 inputTab.addEventListener("click", () => {
@@ -109,8 +110,10 @@ inputMax.textContent = "Min";
 inputMax.addEventListener("click", (event) => {
     const isBeingMaximized = inputContainer.classList.toggle("maximized");
     if(isBeingMaximized) {
+      inputTab.classList.add("maximized");
       inputMax.textContent = "Min";
     } else {
+      inputTab.classList.remove("maximized");
       inputMax.textContent = "Max";
     }
 
@@ -120,8 +123,10 @@ inputMax.addEventListener("click", (event) => {
 htmlMax.addEventListener("click", (event) => {
     const isBeingMaximized = htmlContainer.classList.toggle("maximized");
     if(isBeingMaximized) {
+      htmlTab.classList.add("maximized");
       htmlMax.textContent = "Min";
     } else {
+      htmlTab.classList.remove("maximized");
       htmlMax.textContent = "Max";
     }
 
@@ -132,8 +137,10 @@ htmlMax.addEventListener("click", (event) => {
 previewMax.addEventListener("click", (event) => {
     const isBeingMaximized = previewContainer.classList.toggle("maximized");
     if(isBeingMaximized) {
+      previewTab.classList.add("maximized");
       previewMax.textContent = "Min";
     } else {
+      previewTab.classList.remove("maximized");
       previewMax.textContent = "Max";
     }
 
