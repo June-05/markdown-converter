@@ -138,6 +138,12 @@ button:hover {
         grid-column: span 3;
     }
 }
+/*FOR ANIMATIONS*/
+/* 1. Give each tab a unique transition name */
+.tab:nth-child(1) { view-transition-name: tab-1; }
+.tab:nth-child(2) { view-transition-name: tab-2; }
+.tab:nth-child(3) { view-transition-name: tab-3; }
+
 
 .tab.active,
 .tab.maximized {

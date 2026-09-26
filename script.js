@@ -73,9 +73,11 @@ inputTab.addEventListener("click", () => {
     htmlContainer.style.display = "none";
     previewContainer.style.display = "none";
 
-    inputTab.classList.add("active");
-    htmlTab.classList.remove("active");
-    previewTab.classList.remove("active");
+    animateUIChange(() => {
+        inputTab.classList.add("active");
+        htmlTab.classList.remove("active");
+        previewTab.classList.remove("active");
+    });
 });
 
 htmlTab.addEventListener("click", () => {
@@ -83,9 +85,11 @@ htmlTab.addEventListener("click", () => {
     htmlContainer.style.display = "block";
     previewContainer.style.display = "none";
 
-    inputTab.classList.remove("active");
-    htmlTab.classList.add("active");
-    previewTab.classList.remove("active");
+    animateUIChange(() => {
+        inputTab.classList.remove("active");
+        htmlTab.classList.add("active");
+        previewTab.classList.remove("active");
+    });
 });
 
 previewTab.addEventListener("click", () => {
@@ -93,9 +97,11 @@ previewTab.addEventListener("click", () => {
     htmlContainer.style.display = "none";
     previewContainer.style.display = "block";
 
-    inputTab.classList.remove("active");
-    htmlTab.classList.remove("active");
-    previewTab.classList.add("active");
+    animateUIChange(() => {
+        inputTab.classList.remove("active");
+        htmlTab.classList.remove("active");
+        previewTab.classList.add("active");
+    });
 });
 
 //maximizing&minimizing tabs
@@ -116,39 +122,55 @@ previewMax.innerHTML = maximizeIcon;
 
 inputMax.addEventListener("click", (event) => {
     const isBeingMaximized = inputContainer.classList.toggle("maximized");
-    if (isBeingMaximized) {
-        inputTab.classList.add("maximized");
-        inputMax.innerHTML = minimizeIcon;
-    } else {
-        inputTab.classList.remove("maximized");
-        inputMax.innerHTML = maximizeIcon;
-    }
+
+    animateUIChange(() => {
+        if (isBeingMaximized) {
+            inputTab.classList.add("maximized");
+            inputMax.innerHTML = minimizeIcon;
+        } else {
+            inputTab.classList.remove("maximized");
+            inputMax.innerHTML = maximizeIcon;
+        }
+    });
 
     event.stopPropagation();
 });
 
 htmlMax.addEventListener("click", (event) => {
     const isBeingMaximized = htmlContainer.classList.toggle("maximized");
-    if (isBeingMaximized) {
-        htmlTab.classList.add("maximized");
-        htmlMax.innerHTML = minimizeIcon;
-    } else {
-        htmlTab.classList.remove("maximized");
-        htmlMax.innerHTML = maximizeIcon;
-    }
 
+    animateUIChange(() => {
+        if (isBeingMaximized) {
+            htmlTab.classList.add("maximized");
+            htmlMax.innerHTML = minimizeIcon;
+        } else {
+            htmlTab.classList.remove("maximized");
+            htmlMax.innerHTML = maximizeIcon;
+        }
+    });
     event.stopPropagation();
 });
 
 previewMax.addEventListener("click", (event) => {
     const isBeingMaximized = previewContainer.classList.toggle("maximized");
-    if (isBeingMaximized) {
-        previewTab.classList.add("maximized");
-        previewMax.innerHTML = minimizeIcon;
-    } else {
-        previewTab.classList.remove("maximized");
-        previewMax.innerHTML = maximizeIcon;
-    }
-
+    animateUIChange(() => {
+        if (isBeingMaximized) {
+            previewTab.classList.add("maximized");
+            previewMax.innerHTML = minimizeIcon;
+        } else {
+            previewTab.classList.remove("maximized");
+            previewMax.innerHTML = maximizeIcon;
+        }
+    });
     event.stopPropagation();
 });
+
+//FOR View Transition API ANIMATION
+// 1. Create a master wrapper function
+function animateUIChange(uiUpdateFunction) {
+    if (!document.startViewTransition) {
+        uiUpdateFunction(); // Fallback for old browsers
+        return;
+    }
+    document.startViewTransition(uiUpdateFunction);
+}
