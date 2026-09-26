@@ -29,11 +29,10 @@ body {
 
 #tab-container {
     position: relative;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
     align-items: baseline;
 
-    gap: 10px;
     padding-top: 10px;
     padding-left: 10px;
 
@@ -43,6 +42,10 @@ body {
 }
 
 .tab {
+    order: 0;
+    grid-column: span 4;
+    place-self: start;
+
     padding: 10px 20px;
     text-align: center;
     cursor: pointer;
@@ -88,6 +91,52 @@ button:hover {
     padding: 8px 20px;
     color: var(--off-white);
     background-color: var(--foreground);
+}
+
+/*It respects order of tabs with respective to its content when opened*/
+#inputTab.active,
+#inputTab.maximized {
+    order: -3;
+}
+
+#htmlTab.active,
+#htmlTab.maximized {
+    order: -2;
+}
+
+#previewTab.active,
+#previewTab.maximized {
+    order: -1;
+}
+
+/* EDGE CONDITION WHERE THERE ARE ONLY TWO ACTIVE/MAXIMIZED TABS */
+/* When there are 2 active/maximized tabs*/
+#tab-container:has(
+        .tab:is(.active, .maximized) ~ .tab:is(.active, .maximized)
+    ):not(
+        :has(
+            .tab:is(.active, .maximized)
+                ~ .tab:is(.active, .maximized)
+                ~ .tab:is(.active, .maximized)
+        )
+    ) {
+    /* 1. Base rule: Set EVERY tab to span 3 by default */
+    .tab {
+        grid-column: span 3;
+    }
+
+    /* 2. Upgrade ALL active/maximized tabs to span 6 */
+    .tab:is(.active, .maximized) {
+        grid-column: span 6;
+    }
+
+    /* 3. The Magic Trick: Revert the SECOND active tab back to span 3.
+     Because we use the ~ symbol, this targets any active tab that comes 
+     *after* another active tab. 
+     This guarantees ONLY the very first active tab in the DOM stays at span 6! */
+    .tab:is(.active, .maximized) ~ .tab:is(.active, .maximized) {
+        grid-column: span 3;
+    }
 }
 
 .tab.active,
@@ -137,7 +186,7 @@ button:hover {
     border-radius: 0 5px 5px 5px;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 700px) {
     #main-container,
     #tab-container {
         display: contents;
@@ -176,6 +225,7 @@ button:hover {
         }
 
         .tab {
+            place-self: auto;
             font-weight: normal;
             color: var(--white);
             background-color: var(--foreground);
